@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bibliotea Infinita</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <h1 class="navbar-brand">Biblioteca Infinita</h1>
+        <a href="{% url 'libros:subir_libro' %}" class="btn btn-secondary">¿Deseas agregar un libro a la biblioteca?</a>
+      </div>
+    </nav>
+
+    <!--search bar-->
+    <form method="GET" action="{% url 'libros:buscar_libros' %}">
+      <div class="input-group mb-3">
+        <input type="search" class="form-control" name="q" placeholder="Search..." aria-label="Search" aria-describedby="search-addon">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </div>
+    </form>
+
+    <ul class="list-group flex-column">
+      {% for libro in libros %}
+      <li class="list-group-item d-flex flex-row justify-content-between align-items-center">
+        <a href="{% url 'libros:detalle_libro' libro.id %}">{{ libro.titulo }}</a>
+        <div class="d-flex">
+          <a href="" class="btn btn-primary me-2">Editar libro</a>
+          <a href="" class="btn btn-danger">Eliminar libro</a>
+        </div>
+      </li>
+      {% empty %}
+      <li class="list-group-item">No se encontraron libros.</li>
+      {% endfor %}
+    </ul>
+
+    <br>
+
+
+  <!--funcion de eliminar con js-->
+
+<script>
+  document.querySelectorAll(".eliminar-form").forEach(function(form){
+    form.addEventListener("submit",function(event){
+      event.preventDefault();
+
+        if(confirm("¿estas seguro que deseas eliminar este libro ?")){
+          this.submit();
+        }
+    });
+  });
+
+
+
+</script>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+  </body>
+</html>

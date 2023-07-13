@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>Sube el libro que deseas</h1>
+
+    <form method="post" enctype="multipart/form-data" id="subir-libro-form">
+      {% csrf_token %}
+      <label for="titulo">Título:</label>
+      <input
+        type="text"
+        id="titulo"
+        name="titulo"
+        required
+        class="form-control"
+      /><br />
+
+      <label for="autor">Autor:</label>
+      <input
+        type="text"
+        id="autor"
+        name="autor"
+        required
+        class="form-control"
+      /><br />
+
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        required
+        class="form-control"
+      /><br />
+
+      <label for="archivo_pdf">Archivo PDF:</label>
+      <input
+        type="file"
+        id="archivo_pdf"
+        name="archivo_pdf"
+        required
+        class="form-control"
+        id="formFile"
+      /><br />
+
+      <button type="submit" class="btn btn-dark">Subir</button>
+    </form>
+
+    <div id="mensaje" style="display: none;"></div>
+
+<!-- {%if mensaje%}
+<p>{{mensaje}}</p>
+{%endif%} -->
+
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById('subir-libro-form').addEventListener('submit',function(event){
+      event.preventDefault();
+
+        //mostramos el mensaje de se ha subido exitosamente
+        var mensaje = document.getElementById('mensaje');
+        mensaje.innerText = 'PDF subido exitosamente';
+        mensaje.style.display='block';
+
+        //redirigimos a lista_libros.html despues de 2 segundos
+      setTimeout(function(){
+        window.location.href="{%url 'libros:lista_libros' %}";
+      },2000);
+
+      event.target.submit();
+    })
+  })
+</script>
+
+
+
+
+
+  </body>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+    crossorigin="anonymous"
+  ></script>
+</html>
