@@ -38,34 +38,23 @@
       <li class="list-group-item d-flex flex-row justify-content-between align-items-center">
         <a href="{% url 'libros:detalle_libro' libro.id %}">{{ libro.titulo }}</a>
         <div class="d-flex">
-          <a href="" class="btn btn-primary me-2">Editar libro</a>
-          <a href="" class="btn btn-danger">Eliminar libro</a>
+          <a href="{% url 'libros:editar_libro' libro.id %}" class="btn btn-primary me-2">Editar libro</a>
+          <form action="{% url 'libros:eliminar_libro' libro.id %}" method="POST" class="eliminar-form" onsubmit="return confirm('¿Estás seguro que deseas eliminar este libro?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar libro</button>
+          </form>
         </div>
       </li>
       {% empty %}
       <li class="list-group-item">No se encontraron libros.</li>
       {% endfor %}
     </ul>
+    
 
     <br>
 
 
-  <!--funcion de eliminar con js-->
 
-<script>
-  document.querySelectorAll(".eliminar-form").forEach(function(form){
-    form.addEventListener("submit",function(event){
-      event.preventDefault();
-
-        if(confirm("¿estas seguro que deseas eliminar este libro ?")){
-          this.submit();
-        }
-    });
-  });
-
-
-
-</script>
 
 
 

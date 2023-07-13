@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Libro
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 import time
 
@@ -65,3 +67,16 @@ def eliminar_libro(request, libro_id):
         return redirect('libros:lista_libros')
     else:
         return render(request, 'libros/eliminar_libro.html', {'libro': libro})
+    
+    
+def editar_libro(request,libro_id):
+    libro = get_object_or_404(Libro,pk=libro_id)
+    if request.method == 'POST':
+        libro.titulo = request.POST['titulo']
+        libro.autor = request.POST['autor']
+        libro.descripcion = request.POST['descripcion']
+        libro.save()
+        
+        return redirect('libros:lista_libros')
+    else:
+        return render(request,'libros/editar_libro.html',{'libro':libro})
