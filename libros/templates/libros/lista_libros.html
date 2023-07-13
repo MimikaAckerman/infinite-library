@@ -26,7 +26,7 @@
     </nav>
 
     <!--search bar-->
-    <form method="GET" action="{% url 'libros:buscar_libros' %}">
+    <form method="POST" action="{% url 'libros:buscar_libros' %}">
       <div class="input-group mb-3">
         <input type="search" class="form-control" name="q" placeholder="Search..." aria-label="Search" aria-describedby="search-addon">
         <button class="btn btn-primary" type="submit">Search</button>

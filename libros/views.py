@@ -52,12 +52,16 @@ def descargar_libro(request,libro_id):
     return response
 
 def buscar_libro(request):
-    if 'q' in request.GET:
-        query = request.GET['q']
-        libros = Libro.objects.filter(titulo__icontains=query)
+    if request.method == 'POST':
+        if 'q' in request.POST:
+            query = request.POST['q']
+            libros = Libro.objects.filter(titulo__icontains=query)
+        else:
+            libros = Libro.objects.all()
     else:
         libros = Libro.objects.all()
-    return render(request,'libros/lista_libros.html',{'libros':libros})
+    return render(request, 'libros/lista_libros.html', {'libros': libros})
+
 
 #funcion de editar y eliminar elemento
 def eliminar_libro(request, libro_id):
@@ -74,7 +78,7 @@ def editar_libro(request,libro_id):
     if request.method == 'POST':
         libro.titulo = request.POST['titulo']
         libro.autor = request.POST['autor']
-        libro.descripcion = request.POST['descripcion']
+        libro.description = request.POST['description']
         libro.save()
         
         return redirect('libros:lista_libros')
