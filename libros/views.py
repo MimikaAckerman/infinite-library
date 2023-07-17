@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Libro
 from django.shortcuts import render, get_object_or_404, redirect
@@ -32,14 +32,15 @@ def subir_libro(request):
         
         titulo = request.POST['titulo']
         autor = request.POST['autor']
-        description = request.POST['description']
+        descripcion = request.POST['descripcion']
+        print(request.FILES)
         archivo_pdf = request.FILES['archivo_pdf']
         
-        libro = Libro(titulo=titulo, autor=autor, descripcion=description, archivo_pdf=archivo_pdf)
+        libro = Libro(titulo=titulo, autor=autor, descripcion=descripcion, archivo_pdf=archivo_pdf)
         
         libro.save()
         time.sleep(2) #agregamos una pausa de 2 segundos
-        return HttpResponse('Libro subido exitosamente.')
+        return redirect('Libros:lista_libros')
     else:
           return render(request, 'libros/subir_libro.html')
 
@@ -78,7 +79,7 @@ def editar_libro(request,libro_id):
     if request.method == 'POST':
         libro.titulo = request.POST['titulo']
         libro.autor = request.POST['autor']
-        libro.description = request.POST['description']
+        libro.descripcion = request.POST['descripcion']
         libro.save()
         
         return redirect('libros:lista_libros')
